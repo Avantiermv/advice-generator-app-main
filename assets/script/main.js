@@ -1,12 +1,23 @@
-async function takeTheAdvice2(url){
+
+async function takeTheAdvice(url, arg1, arg2){
     try{
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data.slip.advice);
-        console.log(data.slip.id);
+        arg1.innerText = `Advice #${data.slip.id}`;
+        arg2.innerText = `"${data.slip.advice}"`;
     }catch(e){
         console.error("Error: ", e);
     }
 }
 
-takeTheAdvice2('https://api.adviceslip.com/advice');
+let adviceNumber = document.querySelector('.advice-number');
+let adviceText = document.querySelector('.advice-text');
+
+takeTheAdvice('https://api.adviceslip.com/advice', adviceNumber, adviceText);
+
+const rollDice = document.querySelector('.dice');
+
+rollDice.addEventListener('click', () => {
+    takeTheAdvice('https://api.adviceslip.com/advice', adviceNumber, adviceText);
+});
+
